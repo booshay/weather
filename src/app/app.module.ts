@@ -1,14 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { TemperatureComponent } from './temperature/temperature.component';
 
+ 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    TemperatureComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

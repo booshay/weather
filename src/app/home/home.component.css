@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+ }
+
+body {
+    height: 100%;
+    background-color: rgb(44, 62, 88);
+    color: rgb(166, 173, 202);
+}
+
+.currentWx {
+    display: inline-flex; 
+}
+
+.left .icon {
+ margin: .5em;
+}
+
+.right .temperature {
+    font-size: 4em;     
+    
+    
+ }
+
+ .right .winds {
+    font-size: 2em;
+ }
+
+
+
+
+ .forecastWx {
+     width: 99vw;
+     padding: .1em;
+}
+
+.test:nth-child(odd) {
+    background-color: rgb(52, 70, 97);
+
+}
+ 
+ .test {
+     display: grid;
+     grid-template-areas:   'icon  period'
+                            'icon  forecast' ;
+     grid-gap: 1em;
+     margin: 1.5em;
+
+
+ }
+
+ .forecastWx img {
+     grid-area: icon;
+ 
+ }
+
+ .periodName {
+     grid-area: period;
+      width: 80vw;
+ }
+
+ .forecastWx .forecast {
+     grid-area: forecast;
+      width: 80vw;
+
+ }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <div *ngIf="currentWeatherData" class="currentWx">
+      <div class="left">
+        <div class="icon">
+          <img src="{{currentIcon}}" alt="">
+        </div>
+      </div>
+      <div class="right">
+        <div class="temperature">
+          {{currentTemperature}} F
+        </div>
+        <div class="winds">
+          {{currentWindSpeed}} {{currentWindDirection}}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="forecastWeatherData" class="forecastWx">
+      <div class="test" *ngFor="let period of forecastWeatherData">
+        <img src="{{period.icon}}" alt="">
+        <h5 class="periodName">{{period.name}}</h5>
+        <div class="forecast">{{period.detailedForecast}}</div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+</body>
+
+</html>
