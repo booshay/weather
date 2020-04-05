@@ -12,12 +12,14 @@ export class HomeComponent implements OnInit {
 
 
   currentWeatherData: string;
+
   currentWindSpeed : string;
   currentWindDirection : string;
   currentTemperature: string;
   currentIcon: string;
 
   forecastWeatherData: string;
+
   forecastWindSpeed : string;
   forecastWindDirection : string;
   forecastTemperature: string;
@@ -25,22 +27,58 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dataService.getCurrentWeather('forecastHourly')
-      .subscribe((data :any) => {
-        console.log(data.properties.periods[0]);
-        this.currentWeatherData = data.properties.periods[0];
+    this.dataService.getLocation()
+    .subscribe(position=> {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      let link = `https://api.weather.gov/points/${position.coords.latitude+','}${position.coords.longitude}`;
+      this.dataService.getWxLink(link)
+      .subscribe((wxLink :any)=> {
+          this.dataService.getWx(wxLink.properties.forecastHourly)
+         .subscribe((data :any) => {
+           this.currentWeatherData = data.properties.periods[0];
         this.currentTemperature = data.properties.periods[0].temperature
         this.currentWindSpeed = data.properties.periods[0].windSpeed;
         this.currentWindDirection = data.properties.periods[0].windDirection;
         this.currentIcon = data.properties.periods[0].icon.replace("small", "large");
-      });
+         });
 
-      this.dataService.getCurrentWeather('forecast')
-      .subscribe((data :any) => {
-        console.log(data.properties.periods);
-        this.forecastWeatherData = data.properties.periods;
-      });
-      
-  }
-
+         this.dataService.getWx(wxLink.properties.forecast)
+         .subscribe((data :any) => {
+          this.forecastWeatherData = data.properties.periods; 
+         });
+      })
+    })
+  }  
+    
 }
+
+/*
+
+  function test() {
+    this.dataService.getLocation()
+    .subscribe(position=> {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      let link = `https://api.weather.gov/points/${position.coords.latitude+','}${position.coords.longitude}`;
+      this.dataService.getWxLink(link)
+      .subscribe((wxLink :any)=> {
+          this.dataService.getWx(wxLink.properties.forecastHourly)
+         .subscribe((data :any) => {
+           this.currentWeatherData = data.properties.periods[0];
+        this.currentTemperature = data.properties.periods[0].temperature
+        this.currentWindSpeed = data.properties.periods[0].windSpeed;
+        this.currentWindDirection = data.properties.periods[0].windDirection;
+        this.currentIcon = data.properties.periods[0].icon.replace("small", "large");
+         });
+
+         this.dataService.getWx(wxLink.properties.forecast)
+         .subscribe((data :any) => {
+          this.forecastWeatherData = data.properties.periods; 
+         });
+      })
+    })
+
+   }
+  
+   */

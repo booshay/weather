@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, mergeMap} from 'rxjs/operators'; 
+import {concatMap, tap, mergeMap, map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import {map, mergeMap} from 'rxjs/operators';
 export class DataService {
 
   constructor(private http: HttpClient) { }
-
+/*
   getCurrentWeather(type) {
     return this.http.get('https://api.weather.gov/points/42.026721,-71.285873').pipe
     (map((grid :any) => 
@@ -19,8 +20,38 @@ export class DataService {
      })
      )
   }
+*/
 
-
+  //-----------------------------------   https://geolocation-db.com/jsonp/  is better as it gives us city, state , country also
+  getLocation(): Observable<any> {
+    return new Observable(obs => {
+     navigator.geolocation.getCurrentPosition(
+       success => {
+         obs.next(success);
+         obs.complete();
+       },
+       error => {
+         obs.error(error);
+       }
+     );
+   })
+   }
+   
+   /*
+   
+   getLocation2() {
+     return this.http.get('https://geolocation-db.com/jsonp/').pipe(map((response :any) => 
+     response.jsonp()))
+   }
+   */
+   
+   getWxLink(link) {
+     return this.http.get(link);
+   }
+   
+   getWx(link) {
+     return this.http.get(link);
+   }
 
 }
 
